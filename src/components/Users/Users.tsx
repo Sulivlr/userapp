@@ -9,7 +9,7 @@ interface Props {
 const Users: React.FC<Props> = ({users}) => {
     return (
         <>
-            <h4>Users</h4>
+            <h4>Players</h4>
             {users.map(user => (
                 <UserCard
                 key={user.id}

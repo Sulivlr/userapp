@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {User, UserForm} from "../../types";
+import {Roles} from "../../constant";
 
 
 interface Props {
@@ -15,10 +16,17 @@ const UserForm: React.FC<Props> = ({onSubmit}) => {
         isActive: false,
     });
 
-    const changeUser = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const changeUser = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setUser(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value,
+        }));
+    };
+
+    const changeIsActive = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUser(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.checked,
         }));
     };
 
@@ -33,9 +41,9 @@ const UserForm: React.FC<Props> = ({onSubmit}) => {
 
     return (
         <form onSubmit={formSubmit}>
-            <h4>Add new user!</h4>
+            <h4>Add new player!</h4>
             <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Nickname</label>
                 <input
                     type="text"
                     name="name"
@@ -66,6 +74,35 @@ const UserForm: React.FC<Props> = ({onSubmit}) => {
                     className="form-control"
                     value={user.age}
                     onChange={changeUser}
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="Role">Role</label>
+                <select
+                    required
+                    name="role"
+                    id="role"
+                    className="form-select"
+                    value={user.role}
+                    onChange={changeUser}
+                >
+                    <option value="">Select a role</option>
+                    {Roles.map(role => (
+                        <option key={role.value} value={role.value}>{role.label}</option>
+                    ))}
+                </select>
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="age">Is Active?</label><br/>
+                <input
+                    type="checkbox"
+                    name="isActive"
+                    id="isActive"
+                    className="form-check-input"
+                    checked={user.isActive}
+                    onChange={changeIsActive}
                 />
             </div>
 
