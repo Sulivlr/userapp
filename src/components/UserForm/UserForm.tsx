@@ -11,6 +11,8 @@ const UserForm: React.FC<Props> = ({onSubmit}) => {
         name: '',
         description: '',
         age: 0,
+        role: '',
+        isActive: false,
     });
 
     const changeUser = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
