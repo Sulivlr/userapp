@@ -1,13 +1,21 @@
 import React from 'react';
 import UserCard from "./UserCard";
+import {User} from "../../types";
 
-const Users: React.FC = () => {
+interface Props {
+    users: User[];
+}
+
+const Users: React.FC<Props> = ({users}) => {
     return (
         <>
             <h4>Users</h4>
-            <UserCard/>
-            <UserCard/>
-            <UserCard/>
+            {users.map(user => (
+                <UserCard
+                key={user.id}
+                user={user}
+                />
+            ))}
         </>
     );
 };

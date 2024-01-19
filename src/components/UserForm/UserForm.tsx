@@ -1,9 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {User, UserForm} from "../../types";
 
-const UserForm: React.FC = () => {
+
+interface Props {
+    onSubmit: (user: User) => void;
+}
+const UserForm: React.FC<Props> = ({onSubmit}) => {
+
+    const [user, setUser] = useState<UserForm>({
+        name: '',
+        description: '',
+        age: 0,
+    });
+
+    const changeUser = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setUser(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const formSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onSubmit({
+            id: Math.random().toString(),
+                ...user,
+            age: parseInt(String(user.age)),
+        });
+    };
+
     return (
-        <form>
-            <h4>Add new users!</h4>
+        <form onSubmit={formSubmit}>
+            <h4>Add new user!</h4>
             <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input
@@ -11,6 +39,8 @@ const UserForm: React.FC = () => {
                     name="name"
                     id="name"
                     className="form-control"
+                    value={user.name}
+                    onChange={changeUser}
                 />
             </div>
 
@@ -20,6 +50,8 @@ const UserForm: React.FC = () => {
                     name="description"
                     id="description"
                     className="form-control"
+                    value={user.description}
+                    onChange={changeUser}
                 />
             </div>
 
@@ -30,6 +62,8 @@ const UserForm: React.FC = () => {
                     name="age"
                     id="age"
                     className="form-control"
+                    value={user.age}
+                    onChange={changeUser}
                 />
             </div>
 
